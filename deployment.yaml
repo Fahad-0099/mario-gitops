@@ -1,67 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "1"
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"mario"},"name":"mario-deployment","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"mario"}},"template":{"metadata":{"labels":{"app":"mario"}},"spec":{"containers":[{"image":"pengbai/docker-supermario","name":"mario","ports":[{"containerPort":8080}]}]}}}}
-  creationTimestamp: "2026-11-09T12:28:29Z"
-  generation: 1
-  labels:
-    app: mario
   name: mario-deployment
   namespace: default
-  resourceVersion: "6338"
-  uid: e9d2ac2d-25e5-4e28-bb16-c2e9d6acc5df
+  labels:
+    app: mario
 spec:
-  progressDeadlineSeconds: 600
-  replicas: 1
-  revisionHistoryLimit: 10
+  replicas: 2
   selector:
     matchLabels:
       app: mario
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
   template:
     metadata:
       labels:
         app: mario
     spec:
       containers:
-      - image: pengbai/docker-supermario
-        imagePullPolicy: Always
-        name: mario
+      - name: mario
+        image: pengbai/docker-supermario
         ports:
         - containerPort: 8080
-          protocol: TCP
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2026-11-09T12:28:31Z"
-    lastUpdateTime: "2026-11-09T12:28:31Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2026-11-09T12:28:29Z"
-    lastUpdateTime: "2026-11-09T12:28:31Z"
-    message: ReplicaSet "mario-deployment-6589cc78bd" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 1
-  readyReplicas: 1
-  replicas: 1
-  terminatingReplicas: 0
-  updatedReplicas: 1
